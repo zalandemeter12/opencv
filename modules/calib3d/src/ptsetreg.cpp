@@ -46,6 +46,7 @@
 #include <algorithm>
 #include <iterator>
 #include <limits>
+#include <chrono>
 
 namespace cv
 {
@@ -166,7 +167,11 @@ public:
         int d2 = m2.channels() > 1 ? m2.channels() : m2.cols;
         int count = m1.checkVector(d1), count2 = m2.checkVector(d2), maxGoodCount = 0;
 
-        RNG rng((uint64)-1);
+        std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
+            std::chrono::system_clock::now().time_since_epoch()
+        );
+
+        RNG rng((uint64)ms.count());
 
         CV_Assert( cb );
         CV_Assert( confidence > 0 && confidence < 1 );
@@ -279,7 +284,11 @@ public:
         int count = m1.checkVector(d1), count2 = m2.checkVector(d2);
         double minMedian = DBL_MAX;
 
-        RNG rng((uint64)-1);
+        std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
+            std::chrono::system_clock::now().time_since_epoch()
+        );
+
+        RNG rng((uint64)ms.count());
 
         CV_Assert( cb );
         CV_Assert( confidence > 0 && confidence < 1 );
